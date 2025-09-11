@@ -1,11 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Pénzváltó</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #messageLogger {
+            margin-top: 20px;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+    </style>
 </head>
+
 <body>
-    
+    <h1>Pénzváltó</h1>
+    <h3>Ez egy pénzváltó weboldal, amellyel az aktuális árfolyam alapján átválthatja az összeget forintból euróra vagy
+        dollárra.</h3>
+    <form action="#" method="post">
+        <span>
+            <label for="osszeg">Pénzösszeg (HUF)
+                <input type="number" id="osszeg" hint="Adja meg az összeget (forintban)!">
+            </label>
+            <select id="valuta">
+                <option>Euró(€)</option>
+                <option>Dollár ($)</option>
+            </select>
+
+            <input type="submit" id="gomb" value="Átváltás">
+        </span>
+    </form>
+    <div id="messageLogger"></div>
 </body>
+<script>
+    const messageLogger = document.getElementById("messageLogger");
+    const gomb = document.getElementById("gomb");
+
+    gomb.addEventListener("click", function (event) {
+        event.preventDefault();
+
+        const forintOsszeg = parseFloat(document.getElementById("osszeg").value);
+        const valuta = document.getElementById("valuta").value;
+
+        if (isNaN(forintOsszeg)) {
+            messageLogger.innerHTML = `<div>Kérem, számot adjon meg!</div>`;
+            return;
+        }
+        if (forintOsszeg <= 0) {
+            messageLogger.innerHTML = `<div>Kérem, pozitív számot adjon meg!</div>`;
+            return;
+        }
+
+        let atvaltottOsszeg = 0;
+        if (valuta === "Euró(€)") {
+            atvaltottOsszeg = forintOsszeg / 380;
+        } else if (valuta === "Dollár ($)") {
+            atvaltottOsszeg = forintOsszeg / 350;
+        }
+        atvaltottOsszeg = atvaltottOsszeg.toFixed(2) + " " + (valuta === "Euró(€)" ? "€" : "$");
+
+        messageLogger.innerHTML = `
+        <div>${forintOsszeg}Ft = ${atvaltottOsszeg} </div>
+      `;
+    });
+</script>
+
 </html>
