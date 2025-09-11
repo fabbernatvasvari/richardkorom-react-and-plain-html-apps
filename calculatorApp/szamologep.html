@@ -33,10 +33,11 @@
     <h1>Számológép</h1>
     <h3>Ez egy számológép weboldal, amellyel a 4 alapműveletet lehet elvégezni 2 tetszőleges számon.</h3>
     <form action="#" method="post">
+        <span>
         <label for="szam1">
             <input type="number"  id="szam1" hint="Adja meg a számot">
         </label>
-        <select>
+        <select id="operator">
             <option>+</option>
             <option>-</option>
             <option>*</option>
@@ -46,6 +47,7 @@
             <input type="number"  id="szam2" hint="Adja meg a számot">
         </label>
         <input type="submit" id="gomb" value="Számítás">
+        </span>
     </form>
     <div id="messageLogger"></div>
 </body>
@@ -56,18 +58,35 @@
     gomb.addEventListener("click", function(event) {
       event.preventDefault();
 
-      const Celsius = parseFloat(document.getElementById("szam1").value);
-      if (isNaN(Celsius)) {
-        messageLogger.innerHTML = `<div>Kérem, adjon meg egy számot!</div>`;
+      const szam1 = parseFloat(document.getElementById("szam1").value);
+      const operator = document.getElementById("operator").value;
+      const szam2 = parseFloat(document.getElementById("szam2").value);
+
+      if (isNaN(szam1) || isNaN(szam2)) {
+        messageLogger.innerHTML = `<div>Kérem, két számot adjon meg!</div>`;
         return;
       }
-
-      const Kelvin = Celsius + 273.15;
-      const Fahrenheit = Celsius * 1.8 + 32;
+      
+      let result = 0;
+      switch(operator){
+        case '+':
+          result = szam1 + szam2;
+          break;
+        case '-':
+          result = szam1 - szam2;
+          break;
+        case '*':
+          result = szam1 * szam2;
+          break;
+        case '/':
+          result = szam2 !== 0 ? szam1 / szam2 : "Hiba: Nullával nem lehet osztani!";
+          break;
+        default:
+          result = 0;
+      }
 
       messageLogger.innerHTML = `
-        <div>${Celsius} &deg;C = ${Kelvin.toFixed(2)} K</div>
-        <div>${Celsius} &deg;C = ${Fahrenheit.toFixed(2)} &deg;F</div>
+        <div>Eredmény: ${result}</div>
       `;
     });
   </script>
