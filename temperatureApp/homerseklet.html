@@ -35,13 +35,20 @@
     <form action="#" method="post">
         <header>Adja meg a Celsius hőmérsékletet:</header>
         <label for="homerseklet">
-            <input type="number"  id="homerseklet" value="25" hint="Adja meg a számot">
+            <input type="number"  id="homerseklet" hint="Adja meg a számot">
         </label>
         <input type="submit" id="gomb" value="Számítás">
     </form>
     <div id="messageLogger"></div>
 </body>
 <script>
+    function loadLocalStorageOrDefault() {
+      const defaultTemperature = localStorage.getItem("defaultTemperature");
+      return defaultTemperature ?? "25";
+    }
+
+    document.getElementById("homerseklet").value = loadLocalStorageOrDefault();
+
     const messageLogger = document.getElementById("messageLogger");
     const gomb = document.getElementById("gomb");
 
@@ -49,6 +56,7 @@
       event.preventDefault();
 
       const Celsius = parseFloat(document.getElementById("homerseklet").value);
+      localStorage.setItem("defaultTemperature", Celsius);
       if (isNaN(Celsius)) {
         messageLogger.innerHTML = `<div>Kérem, adjon meg egy számot!</div>`;
         return;
