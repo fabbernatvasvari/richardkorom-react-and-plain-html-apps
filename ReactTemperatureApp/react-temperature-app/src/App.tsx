@@ -6,7 +6,7 @@ import './App.css'
 function App() {
   const [count, setCount] = useState(0)
   const [amount, setAmount] = useState<number | null>(null);
-  const [operation, setOperation] = useState<string>("euro");
+  const [operation] = useState<string>("euro");
   const [eredmeny, setEredmeny] = useState<string>("");
   const Celsius = amount || 0;
   const Kelvin = Celsius + 273.15;
