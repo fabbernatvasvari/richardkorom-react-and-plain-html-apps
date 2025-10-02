@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Kalkulátor</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #messageLogger {
+            margin-top: 20px;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>BMI Kalkulátor</h1>
+    <h3>Ez az alkalmazás kiszámítja a testtömegindexét (BMI) a testsúlya és magassága alapján.</h3>
+    <form action="#" method="post">
+            <label for="magassag">Magasság (cm)
+                <input type="number" id="magassag" min="0" hint="Adja meg a magasságát (cm)!">
+            </label>
+            <label for="suly">Testsúly (kg)
+                <input type="number" id="suly" min="0" hint="Adja meg a testsúlyát (kg)!">
+            </label>
+            <input type="submit" id="gomb" value="Számítás">
+    </form>
+    <div id="messageLogger"></div>
+</body>
+
+<script>
+    const messageLogger = document.getElementById("messageLogger");
+    const gomb = document.getElementById("gomb");
+
+    gomb.addEventListener("click", function (event) {
+        event.preventDefault();
+
+        const suly = parseFloat(document.getElementById("suly").value);
+        const magassag = parseFloat(document.getElementById("magassag").value);
+
+        if (isNaN(suly) || isNaN(magassag)) {
+            messageLogger.innerHTML = `<div>Kérem, 2 számot adjon meg!</div>`;
+            return;
+        }
+        if (suly <= 0 || magassag <= 0) {
+            messageLogger.innerHTML = `<div>Kérem, pozitív számot adjon meg!</div>`;
+            return;
+        }
+
+        // Magasság méterben
+        const magassagMeter = magassag / 100;
+        const bmi = suly / (magassagMeter * magassagMeter);
+
+        let kategoria = "";
+        if (bmi < 16) {
+            kategoria = "Súlyos soványság";
+        } else if (bmi < 17) {
+            kategoria = "Mérsékelt soványság";
+        } else if (bmi < 18.5) {
+            kategoria = "Enyhe soványság";
+        } else if (bmi < 25) {
+            kategoria = "Normál testsúly";
+        } else if (bmi < 30) {
+            kategoria = "Túlsúlyos";
+        } else if (bmi < 35) {
+            kategoria = "Elhízott (I. fokú)";
+        } else if (bmi < 40) {
+            kategoria = "Elhízott (II. fokú)";
+        } else {
+            kategoria = "Súlyosan elhízott (III. fokú)";
+        }
+
+        messageLogger.innerHTML = `
+        <div>Az állapotod: ${kategoria} <br>(BMI: ${bmi.toFixed(1)})</div>
+      `;
+    });
+</script>
+
+</html>
