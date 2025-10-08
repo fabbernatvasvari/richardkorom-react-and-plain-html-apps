@@ -1,11 +1,7 @@
- import { useState } from 'react'
+import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import Bmi from './Bmi'
-import Calculator from './Calculator'
-import MoneyChange from './MoneyChange'
-import Temperature from './Temperature'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -32,11 +28,6 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-
-       <Bmi />
-    <Calculator />
-    <MoneyChange />
-    <Temperature />
     </>
   )
 }
