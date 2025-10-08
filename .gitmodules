@@ -1,4 +1,0 @@
-[submodule "ReactCalculatorApp"]
-	path = ReactCalculatorApp
-	url = https://github.com/fabbernatvasvari/richardkorom
-	branch = noetic-devel
